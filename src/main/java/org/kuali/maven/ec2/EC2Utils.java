@@ -22,6 +22,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
+import com.amazonaws.services.ec2.model.AmazonEC2Exception;
 import com.amazonaws.services.ec2.model.BlockDeviceMapping;
 import com.amazonaws.services.ec2.model.CreateSnapshotRequest;
 import com.amazonaws.services.ec2.model.CreateSnapshotResult;
@@ -240,17 +241,48 @@ public class EC2Utils {
 		if (isEmpty(tags)) {
 			return;
 		}
-		CreateTagsRequest request = new CreateTagsRequest();
-		request.setResources(Collections.singletonList(instance.getInstanceId()));
-		request.setTags(tags);
-		client.createTags(request);
+		while(!createTagsInternal(instance, tags)) {
+			logger.info("Instance not yet available for tagging");
+			EC2Utils.sleep(500);
+		}
+	}
+
+	private boolean createTagsInternal(Instance instance, List<Tag> tags) {
+		try {
+			CreateTagsRequest request = new CreateTagsRequest();
+			request.setResources(Collections.singletonList(instance.getInstanceId()));
+			request.setTags(tags);
+			client.createTags(request);
+			return true;
+		}
+		catch(AmazonEC2Exception e) {
+			return false;
+		}
 	}
 
 	public Instance getSingleEC2Instance(RunInstancesRequest request) {
 		RunInstancesResult result = client.runInstances(request);
 		Reservation r = result.getReservation();
 		List<Instance> instances = r.getInstances();
-		return instances.get(0);
+		Instance instance = instances.get(0);
+		
+/*		// check that you can query this instance
+		// this will avoid com.amazonaws.services.ec2.model.AmazonEC2Exception: The instance ID 'i-0a99681d856ab576f' does not exist (Service: AmazonEC2; Status Code: 400; Error Code: InvalidInstanceID.NotFound; Request ID: a376a3e9-0029-45ea-8381-45824d757016)
+		while(!instanceIsAvailable(instance)) {
+			
+			
+		}*/
+		return instance;
+	}
+
+	private boolean instanceIsAvailable(Instance instance) {
+		try {
+			getEC2Instance(instance.getInstanceId());
+			return true;
+		}
+		catch(AmazonEC2Exception e) {
+			return false;			
+		}
 	}
 
 	protected Filter getFilterFromTag(String tag, String value) {

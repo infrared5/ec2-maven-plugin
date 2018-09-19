@@ -17,27 +17,10 @@ import com.amazonaws.services.ec2.model.RegisterImageResult;
 public class EC2UtilsTest {
 	private static final Logger logger = LoggerFactory.getLogger(EC2UtilsTest.class);
 
-	public static final String ACCESS_KEY = "AKIAIBA67LRGDPAGELNA";
-	public static final String SECRET_KEY_ENCRYPTED = "nVpfVv5p0f7lheZ4Z3M+UW07tLgfL/kmAAbTqXQN4z5XPLvz5VafhQUm1TEXEthxOWzK9LXlnmI=";
-
-	protected EC2Utils getEC2Utils() {
-		BasicTextEncryptor bte = new BasicTextEncryptor();
-		bte.setPassword(System.getProperty("gbs.master.password"));
-		String secretKey = bte.decrypt(SECRET_KEY_ENCRYPTED);
-		return EC2Utils.getInstance(ACCESS_KEY, secretKey);
-	}
-
-	protected AmazonEC2 getEC2Client() {
-		BasicTextEncryptor bte = new BasicTextEncryptor();
-		bte.setPassword(System.getProperty("gbs.master.password"));
-		String secretKey = bte.decrypt(SECRET_KEY_ENCRYPTED);
-		return EC2Utils.getEC2Client(ACCESS_KEY, secretKey);
-	}
-
 	@Test
 	@Disabled
 	public void testRegisterImage2() {
-		AmazonEC2 client = getEC2Client();
+		AmazonEC2 client = Common.getEC2Client();
 		try {
 			RegisterImageRequest request = new RegisterImageRequest();
 			request.setName("ci-slave-2012-02-22-test");
@@ -66,7 +49,7 @@ public class EC2UtilsTest {
 	@Disabled
 	public void testDescribeImages() {
 		try {
-			EC2Utils ec2Utils = getEC2Utils();
+			EC2Utils ec2Utils = Common.getEC2Utils();
 			String key = "Name";
 			String prefix = "CI Slave";
 			String device = "/dev/sda1";

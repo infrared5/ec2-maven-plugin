@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gbs.maven.plugins</groupId>
 	<artifactId>ec2-maven-plugin</artifactId>
-	<version>1.1.7</version>
+	<version>1.1.8</version>
 	<packaging>maven-plugin</packaging>
 	<name>Maven EC2 Plugin</name>
 	<description>Manipulate resources in Amazon's Elastic Computing Cloud via Maven</description>
 	<url>https://github.com/gbandsmith/ec2-maven-plugin</url>
-	
+
 	<licenses>
 		<license>
 			<name>Educational Community License, Version 2.0</name>
@@ -49,6 +49,12 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.22.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

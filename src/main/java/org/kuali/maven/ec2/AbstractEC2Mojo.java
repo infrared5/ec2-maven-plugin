@@ -18,7 +18,9 @@ public abstract class AbstractEC2Mojo extends AbstractMojo {
      */
     MavenProject project;
 
-    /**
+
+
+	/**
      * List of tags. Tags are name/value pairs and can be supplied in the plugin configuration like this:<br>
      *
      * <pre>
@@ -88,6 +90,10 @@ public abstract class AbstractEC2Mojo extends AbstractMojo {
     public MavenProject getProject() {
         return project;
     }
+    
+    public void setProject(MavenProject project) {
+		this.project = project;
+	}
 
     public List<Tag> getTags() {
         return tags;
