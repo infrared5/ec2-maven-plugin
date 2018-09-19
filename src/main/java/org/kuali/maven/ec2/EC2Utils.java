@@ -223,9 +223,12 @@ public class EC2Utils {
 			String name = getTagValue(running, "Name");
 			logger.info("EC2 Instance: " + name + " (" + id + ") " + dns);
 			props.setProperty("ec2.instance.dns", running.getPublicDnsName());
-			waitForPort(running.getPublicDnsName(), wc);
-			// TODO change this shit
-			//System.getProperties().setProperty("fenix.boe.url", running.getPublicDnsName());
+			waitForPorts(running.getPublicDnsName(), wc);
+			if(wc.getExtraWait() != 0) {
+				logger.info("Extra Wait of " + wc.getExtraWait() + "s for all services to be started up");
+				sleep(wc.getExtraWait() * 1000);
+			}
+			
 			return running;
 		} else {
 			logger.info("Launched " + i.getInstanceId());
@@ -442,25 +445,28 @@ public class EC2Utils {
 		}
 	}
 	
-	public void waitForPort(String dns, WaitControl wc) {
-		if(wc.getWaitPort()!=0) {
+	public void waitForPorts(String dns, WaitControl wc) {
+		if(wc.getWaitPorts() != null && wc.getWaitPorts().size()>0) {
 			long now = System.currentTimeMillis();
 			long timeout = now + wc.getTimeout() * 1000;
-			while (true) {
-				now = System.currentTimeMillis();
-				if (now > timeout) {
-					throw new IllegalStateException("Timed out waiting for port '" + wc.getWaitPort() + "'");
-				}
-				long remaining = (timeout - now) / 1000;
-				if (checkOpenPort(dns, wc.getWaitPort())) {
-					logger.info("Success!!! Port open=" + wc.getWaitPort());
-					break;
-				}
-				else {
-					logger.info("port " + wc.getWaitPort() + " not open yet - " + remaining + "s");
-					sleep(wc.getSleep());
-				}
-			}	
+			for (Integer port : wc.getWaitPorts()) {
+				while (true) {
+					now = System.currentTimeMillis();
+					if (now > timeout) {
+						throw new IllegalStateException("Timed out waiting for port '" + port + "'");
+					}
+					long remaining = (timeout - now) / 1000;
+					if (checkOpenPort(dns, port)) {
+						logger.info("Success!!! Port open=" + port);
+						break;
+					}
+					else {
+						logger.info("port " + port + " not open yet - " + remaining + "s");
+						sleep(wc.getSleep());
+					}
+				}		
+			}
+			
 		}
 	}
 

@@ -4,10 +4,33 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gbs.maven.plugins</groupId>
 	<artifactId>ec2-maven-plugin</artifactId>
-	<version>1.1.6</version>
+	<version>1.1.7</version>
 	<packaging>maven-plugin</packaging>
 	<name>Maven EC2 Plugin</name>
 	<description>Manipulate resources in Amazon's Elastic Computing Cloud via Maven</description>
+	<url>https://github.com/gbandsmith/ec2-maven-plugin</url>
+	
+	<licenses>
+		<license>
+			<name>Educational Community License, Version 2.0</name>
+			<url>https://opensource.org/licenses/ECL-2.0</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Julien Bras</name>
+			<email>julien.bras@gbandsmith.com</email>
+			<organization>GBANDSMITH</organization>
+			<organizationUrl>http://www.gbandsmith.com</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/gbandsmith/ec2-maven-plugin.git</connection>
+		<developerConnection>scm:git:ssh://github.com:gbandsmith/ec2-maven-plugin.git</developerConnection>
+		<url>https://github.com/gbandsmith/ec2-maven-plugin/tree/master</url>
+	</scm>
+
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>

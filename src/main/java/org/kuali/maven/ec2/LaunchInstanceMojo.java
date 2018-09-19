@@ -95,6 +95,13 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 	 * @parameter property="ec2.wait" default-value="true"
 	 */
 	private boolean wait;
+	
+	/**
+	 * The number of seconds to wait for the instance after start before continuing
+	 * 
+	 * @parameter property="ec2.extraWait" default-value="0"
+	 */
+	private int extraWait;
 
 	/**
 	 * The number of seconds to wait for the instance to start before timing out and failing the build
@@ -104,11 +111,11 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 	private int waitTimeout;
 	
 	/**
-	 * The port number to wait to be open before continuing (0 = no test)
+	 * The port number list to wait to be open before continuing
 	 * 
-	 * @parameter property="ec2.waitPort" default-value="0"
+	 * @parameter property="ec2.waitPorts"
 	 */
-	private int waitPort;
+	private List<Integer> waitPorts;
 
 	/**
 	 * The state the instance needs to be in before the plugin considers it to be started.
@@ -131,7 +138,7 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 		RunInstancesRequest request = getRunSingleEC2InstanceRequest();
 		Instance i = ec2Utils.getSingleEC2Instance(request);
 		ec2Utils.createTags(i, tags);
-		WaitControl wc = new WaitControl(wait, waitTimeout, waitPort, state);
+		WaitControl wc = new WaitControl(wait, waitTimeout, waitPorts, state, extraWait);
 		Properties props = project.getProperties();
 		Instance running = ec2Utils.wait(i, wc, props);
 		props.setProperty("ec2.instance.id", running.getInstanceId());
@@ -271,11 +278,19 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 		this.userDataFile = userDataFile;
 	}
 
-	public int getWaitPort() {
-		return waitPort;
+	public List<Integer> getWaitPorts() {
+		return waitPorts;
 	}
 
-	public void setWaitPort(int waitPort) {
-		this.waitPort = waitPort;
+	public void setWaitPort(List<Integer> waitPorts) {
+		this.waitPorts = waitPorts;
+	}
+
+	public int getExtraWait() {
+		return extraWait;
+	}
+
+	public void setExtraWait(int extraWait) {
+		this.extraWait = extraWait;
 	}
 }

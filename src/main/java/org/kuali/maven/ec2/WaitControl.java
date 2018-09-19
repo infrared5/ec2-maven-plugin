@@ -1,13 +1,24 @@
 package org.kuali.maven.ec2;
 
+import java.util.List;
+
 public class WaitControl {
     boolean wait;
     int timeout;
     int sleep = Constants.DEFAULT_SLEEP_MILLIS;
     int initialPause = Constants.DEFAULT_INITIAL_PAUSE_MILLIS;
     String state;
-	int waitPort;
+    List<Integer> waitPorts;
+	int extraWait;
 
+
+	public int getExtraWait() {
+		return extraWait;
+	}
+
+	public void setExtraWait(int extraWait) {
+		this.extraWait = extraWait;
+	}
 
 	public WaitControl() {
         this(false, 0, null);
@@ -20,12 +31,13 @@ public class WaitControl {
         this.state = state;
     }
 
-    public WaitControl(boolean wait, int timeout, int waitPort, String state) {
+    public WaitControl(boolean wait, int timeout, List<Integer> waitPorts, String state, int extraWait) {
         super();
         this.wait = wait;
         this.timeout = timeout;
-        this.waitPort = waitPort;
+        this.waitPorts = waitPorts;
         this.state = state;
+        this.extraWait = extraWait;
     }
 
     public boolean isWait() {
@@ -52,12 +64,12 @@ public class WaitControl {
         this.state = state;
     }
 
-    public int getWaitPort() {
-    	return waitPort;
+    public List<Integer> getWaitPorts() {
+    	return waitPorts;
     }
     
-    public void setWaitPort(int waitPort) {
-    	this.waitPort = waitPort;
+    public void setWaitPorts(List<Integer> waitPorts) {
+    	this.waitPorts = waitPorts;
     }
 
     public int getSleep() {
