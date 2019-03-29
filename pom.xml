@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gbs.maven.plugins</groupId>
 	<artifactId>ec2-maven-plugin</artifactId>
-	<version>1.1.8</version>
+	<version>1.1.9</version>
 	<packaging>maven-plugin</packaging>
 	<name>Maven EC2 Plugin</name>
 	<description>Manipulate resources in Amazon's Elastic Computing Cloud via Maven</description>
