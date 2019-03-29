@@ -32,18 +32,20 @@ public class LaunchInstanceMojoTest {
 
 	@Test
 	public void testExecute() throws Exception {
-		start_then_terminate_instance();		
+		String instanceId = start_instance();
+		terminate_instance(instanceId);
 	}
 
 	@Test
 	@Disabled
 	public void testExecute_hundred() throws Exception {
 		for(int i=0; i<100; i++) {
-			start_then_terminate_instance();
+			String instanceId = start_instance();
+			terminate_instance(instanceId);
 		}
 	}
-
-	private void start_then_terminate_instance() throws MojoExecutionException {
+	
+	private String start_instance() throws MojoExecutionException {
 		logger.info("Start instance...");
 		LaunchInstanceMojo launch = new LaunchInstanceMojo();
 		launch.setProject(project);
@@ -64,7 +66,11 @@ public class LaunchInstanceMojoTest {
 		String instanceId = project.getProperties().getProperty("ec2.instance.id");
 		Assert.notNull(instanceId);
 		logger.info("instance " + instanceId + " started.");
-
+		
+		return instanceId;
+	}
+	
+	private void terminate_instance(String instanceId) throws MojoExecutionException {
 		logger.info("Terminate instance...");
 		TerminateInstanceMojo terminate = new TerminateInstanceMojo();
 		terminate.setInstanceId(instanceId);

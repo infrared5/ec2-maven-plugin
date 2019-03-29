@@ -2,8 +2,10 @@ package org.kuali.maven.ec2;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -14,7 +16,9 @@ import org.kuali.maven.common.ResourceUtils;
 
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceType;
+import com.amazonaws.services.ec2.model.ResourceType;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
+import com.amazonaws.services.ec2.model.TagSpecification;
 
 /**
  * Connect to EC2 and launch a a single instance configured according to user preferences. By default, the plugin waits until the instance
@@ -137,7 +141,6 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 		EC2Utils.sleep(initialPause);
 		RunInstancesRequest request = getRunSingleEC2InstanceRequest();
 		Instance i = ec2Utils.getSingleEC2Instance(request);
-		ec2Utils.createTags(i, tags);
 		WaitControl wc = new WaitControl(wait, waitTimeout, waitPorts, state, extraWait);
 		Properties props = project.getProperties();
 		Instance running = ec2Utils.wait(i, wc, props);
@@ -150,6 +153,19 @@ public class LaunchInstanceMojo extends AbstractEC2Mojo {
 		request.setKeyName(key);
 		request.setInstanceType(InstanceType.fromValue(type));
 		request.setSecurityGroups(securityGroups);
+		
+		// Add tags at instance creation. Safer.
+		Set<TagSpecification> tagsspec = new HashSet<TagSpecification>();
+		TagSpecification t = new TagSpecification();
+		t.setTags(tags);
+		t.setResourceType(ResourceType.Instance);
+		tagsspec.add(t);
+		t = new TagSpecification();
+		t.setTags(tags);
+		t.setResourceType(ResourceType.Volume);
+		tagsspec.add(t);
+		request.setTagSpecifications(tagsspec);
+		
 		String data = getUserData(userData, userDataFile, encoding);
 		request.setUserData(data);
 		return request;
