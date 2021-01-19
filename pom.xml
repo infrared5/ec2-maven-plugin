@@ -2,14 +2,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gbs.maven.plugins</groupId>
+	<groupId>com.red5pro.maven.plugins</groupId>
 	<artifactId>ec2-maven-plugin</artifactId>
-	<version>1.1.9</version>
+	<version>1.2.0</version>
 	<packaging>maven-plugin</packaging>
 	<name>Maven EC2 Plugin</name>
 	<description>Manipulate resources in Amazon's Elastic Computing Cloud via Maven</description>
-	<url>https://github.com/gbandsmith/ec2-maven-plugin</url>
-
+	<!-- Forked from https://github.com/gbandsmith/ec2-maven-plugin -->
+	<url>https://github.com/infrared5/ec2-maven-plugin</url>
 	<licenses>
 		<license>
 			<name>Educational Community License, Version 2.0</name>
@@ -23,14 +23,28 @@
 			<organization>GBANDSMITH</organization>
 			<organizationUrl>http://www.gbandsmith.com</organizationUrl>
 		</developer>
+        <developer>
+            <id>Paul Gregoire</id>
+            <email>paul@infrared5.com</email>
+        </developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git://github.com/gbandsmith/ec2-maven-plugin.git</connection>
-		<developerConnection>scm:git:ssh://github.com:gbandsmith/ec2-maven-plugin.git</developerConnection>
-		<url>https://github.com/gbandsmith/ec2-maven-plugin/tree/master</url>
+		<connection>scm:git:git://github.com/infrared5/ec2-maven-plugin.git</connection>
+		<developerConnection>scm:git:ssh://github.com:infrared5/ec2-maven-plugin.git</developerConnection>
+		<url>https://github.com/infrared5/ec2-maven-plugin/tree/master</url>
 	</scm>
-
-
+    <distributionManagement>
+        <repository>
+            <id>red5pro-plugins</id>
+            <name>red5pro-plugin-releases</name>
+            <url>https://red5pro.jfrog.io/artifactory/plugins-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>red5pro-plugins</id>
+            <name>red5pro-plugin-snapshots</name>
+            <url>https://red5pro.jfrog.io/artifactory/plugins-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
