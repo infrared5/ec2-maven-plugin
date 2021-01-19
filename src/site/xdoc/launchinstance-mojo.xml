@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>ec2:launchinstance</title>
+  </properties>
+  <body>
+    <section name="ec2:launchinstance">
+      <p><strong>Full name</strong>:</p>
+      <p>com.red5pro.maven.plugins:ec2-maven-plugin:1.2.0:launchinstance</p>
+      <p><strong>Description</strong>:</p>
+      <div>Connect to EC2 and launch a a single instance configured according
+to user preferences. By default, the plugin waits until the
+instance reaches the state of "running" before allowing the build
+to continue. Once an EC2 instance is "running" Amazon has assigned
+it a public dns name. The public dns name, the instance id, and the
+value of the tag "Name" (if that tag is supplied) are stored as the
+project properties <code>ec2.instance.dns</code>,
+<code>ec2.instance.id</code>, <code>ec2.instance.name</code>,
+respectively. If <code>wait</code> is false, the
+<code>ec2.instance.dns</code> property will not be set since the
+instance will not have a public dns name by the time the plugin
+execution completes.</div>
+      <p><strong>Attributes</strong>:</p>
+      <ul>
+        <li>Requires a Maven project to be executed.</li>
+      </ul>
+      <subsection name="Required Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#accessKey">accessKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Access Key Id for an account on EC2<br/><strong>User property is</strong>: <code>ec2.accessKey</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#ami">ami</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AMI to launch<br/><strong>User property is</strong>: <code>ec2.ami</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#key">key</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The name of the key to use<br/><strong>User property is</strong>: <code>ec2.key</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#secretKey">secretKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Secret Access Key for an account on EC2<br/><strong>User property is</strong>: <code>ec2.secretKey</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#type">type</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The type of instance to launch<br/><strong>Default value is</strong>: <code>t2.medium</code>.<br/><strong>User property is</strong>: <code>ec2.type</code>.</td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Optional Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#encoding">encoding</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The encoding of the userDataFile<br/><strong>Default value is</strong>: <code>${project.build.sourceEncoding}</code>.<br/><strong>User property is</strong>: <code>ec2.encoding</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#extraWait">extraWait</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The number of seconds to wait for the instance after start before
+continuing<br/><strong>Default value is</strong>: <code>0</code>.<br/><strong>User property is</strong>: <code>ec2.extraWait</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#filterUserData">filterUserData</a></strong></td>
+            <td><code>boolean</code></td>
+            <td><code>-</code></td>
+            <td>If true, userData is filtered with current project, environment,
+and system properties before being supplied to the instance.<br/><strong>User property is</strong>: <code>ec2.filterUserData</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#initialPause">initialPause</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>Wait for this amount of time before attempting to run an instance.
+Amazon needs about 1/2 a second to sort itself out internally or
+the run request will fail<br/><strong>Default value is</strong>: <code>3000</code>.<br/><strong>User property is</strong>: <code>ec2.initialPause</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#securityGroups">securityGroups</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>The security groups into which the instance will be launched<br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#state">state</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The state the instance needs to be in before the plugin considers
+it to be started.<br/><strong>Default value is</strong>: <code>running</code>.<br/><strong>User property is</strong>: <code>ec2.state</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#tags">tags</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre><br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#userData">userData</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>Optional user data for the instance<br/><strong>User property is</strong>: <code>ec2.userData</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#userDataFile">userDataFile</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>If supplied, the contents of the file are supplied to the instance
+as userData. This can be a file on the file system, or any url
+Spring resource loading can understand eg
+"<code>classpath:user-data.txt</code>"<br/><strong>User property is</strong>: <code>ec2.userDataFile</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#wait">wait</a></strong></td>
+            <td><code>boolean</code></td>
+            <td><code>-</code></td>
+            <td>If true, the build will wait until EC2 reports that the instance
+has reached the state of "running" before continuing<br/><strong>Default value is</strong>: <code>true</code>.<br/><strong>User property is</strong>: <code>ec2.wait</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#waitPorts">waitPorts</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>The port number list to wait to be open before continuing<br/><strong>User property is</strong>: <code>ec2.waitPorts</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#waitTimeout">waitTimeout</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The number of seconds to wait for the instance to start before
+timing out and failing the build<br/><strong>Default value is</strong>: <code>300</code>.<br/><strong>User property is</strong>: <code>ec2.waitTimeout</code>.</td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Parameter Details">
+        <p><strong><a name="accessKey">accessKey</a>:</strong></p>
+        <div>The AWS Access Key Id for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.accessKey</code></li>
+        </ul><hr/><p><strong><a name="ami">ami</a>:</strong></p>
+        <div>The AMI to launch</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.ami</code></li>
+        </ul><hr/><p><strong><a name="encoding">encoding</a>:</strong></p>
+        <div>The encoding of the userDataFile</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.encoding</code></li>
+          <li><strong>Default</strong>: <code>${project.build.sourceEncoding}</code></li>
+        </ul><hr/><p><strong><a name="extraWait">extraWait</a>:</strong></p>
+        <div>The number of seconds to wait for the instance after start before
+continuing</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.extraWait</code></li>
+          <li><strong>Default</strong>: <code>0</code></li>
+        </ul><hr/><p><strong><a name="filterUserData">filterUserData</a>:</strong></p>
+        <div>If true, userData is filtered with current project, environment,
+and system properties before being supplied to the instance.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>boolean</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.filterUserData</code></li>
+        </ul><hr/><p><strong><a name="initialPause">initialPause</a>:</strong></p>
+        <div>Wait for this amount of time before attempting to run an instance.
+Amazon needs about 1/2 a second to sort itself out internally or
+the run request will fail</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.initialPause</code></li>
+          <li><strong>Default</strong>: <code>3000</code></li>
+        </ul><hr/><p><strong><a name="key">key</a>:</strong></p>
+        <div>The name of the key to use</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.key</code></li>
+        </ul><hr/><p><strong><a name="secretKey">secretKey</a>:</strong></p>
+        <div>The AWS Secret Access Key for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.secretKey</code></li>
+        </ul><hr/><p><strong><a name="securityGroups">securityGroups</a>:</strong></p>
+        <div>The security groups into which the instance will be launched</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+        </ul><hr/><p><strong><a name="state">state</a>:</strong></p>
+        <div>The state the instance needs to be in before the plugin considers
+it to be started.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.state</code></li>
+          <li><strong>Default</strong>: <code>running</code></li>
+        </ul><hr/><p><strong><a name="tags">tags</a>:</strong></p>
+        <div>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre></div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+        </ul><hr/><p><strong><a name="type">type</a>:</strong></p>
+        <div>The type of instance to launch</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.type</code></li>
+          <li><strong>Default</strong>: <code>t2.medium</code></li>
+        </ul><hr/><p><strong><a name="userData">userData</a>:</strong></p>
+        <div>Optional user data for the instance</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.userData</code></li>
+        </ul><hr/><p><strong><a name="userDataFile">userDataFile</a>:</strong></p>
+        <div>If supplied, the contents of the file are supplied to the instance
+as userData. This can be a file on the file system, or any url
+Spring resource loading can understand eg
+"<code>classpath:user-data.txt</code>"</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.userDataFile</code></li>
+        </ul><hr/><p><strong><a name="wait">wait</a>:</strong></p>
+        <div>If true, the build will wait until EC2 reports that the instance
+has reached the state of "running" before continuing</div>
+        <ul>
+          <li><strong>Type</strong>: <code>boolean</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.wait</code></li>
+          <li><strong>Default</strong>: <code>true</code></li>
+        </ul><hr/><p><strong><a name="waitPorts">waitPorts</a>:</strong></p>
+        <div>The port number list to wait to be open before continuing</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.waitPorts</code></li>
+        </ul><hr/><p><strong><a name="waitTimeout">waitTimeout</a>:</strong></p>
+        <div>The number of seconds to wait for the instance to start before
+timing out and failing the build</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.waitTimeout</code></li>
+          <li><strong>Default</strong>: <code>300</code></li>
+        </ul>
+      </subsection>
+    </section>
+  </body>
+</document>

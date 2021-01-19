@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>ec2:describeimages</title>
+  </properties>
+  <body>
+    <section name="ec2:describeimages">
+      <p><strong>Full name</strong>:</p>
+      <p>com.red5pro.maven.plugins:ec2-maven-plugin:1.2.0:describeimages</p>
+      <p><strong>Description</strong>:</p>
+      <div>Connect to EC2 and list image associated with this account</div>
+      <p><strong>Attributes</strong>:</p>
+      <ul>
+        <li>Requires a Maven project to be executed.</li>
+      </ul>
+      <subsection name="Required Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#accessKey">accessKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Access Key Id for an account on EC2<br/><strong>User property is</strong>: <code>ec2.accessKey</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#secretKey">secretKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Secret Access Key for an account on EC2<br/><strong>User property is</strong>: <code>ec2.secretKey</code>.</td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Optional Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#imagesIds">imagesIds</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>A list of images id's to display information about<br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#tag">tag</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The tag to display for each image.<br/><strong>Default value is</strong>: <code>Name</code>.<br/><strong>User property is</strong>: <code>ec2.tag</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#tags">tags</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre><br/></td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Parameter Details">
+        <p><strong><a name="accessKey">accessKey</a>:</strong></p>
+        <div>The AWS Access Key Id for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.accessKey</code></li>
+        </ul><hr/><p><strong><a name="imagesIds">imagesIds</a>:</strong></p>
+        <div>A list of images id's to display information about</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+        </ul><hr/><p><strong><a name="secretKey">secretKey</a>:</strong></p>
+        <div>The AWS Secret Access Key for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.secretKey</code></li>
+        </ul><hr/><p><strong><a name="tag">tag</a>:</strong></p>
+        <div>The tag to display for each image.</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.tag</code></li>
+          <li><strong>Default</strong>: <code>Name</code></li>
+        </ul><hr/><p><strong><a name="tags">tags</a>:</strong></p>
+        <div>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre></div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+        </ul>
+      </subsection>
+    </section>
+  </body>
+</document>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>ec2:createsnapshot</title>
+  </properties>
+  <body>
+    <section name="ec2:createsnapshot">
+      <p><strong>Full name</strong>:</p>
+      <p>com.red5pro.maven.plugins:ec2-maven-plugin:1.2.0:createsnapshot</p>
+      <p><strong>Description</strong>:</p>
+      <div>Create a snapshot of a volume. If successful, the project property
+<code>ec2.snapshot.id</code> will contain the id of the snapshot
+that was created.</div>
+      <p><strong>Attributes</strong>:</p>
+      <ul>
+        <li>Requires a Maven project to be executed.</li>
+      </ul>
+      <subsection name="Required Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#accessKey">accessKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Access Key Id for an account on EC2<br/><strong>User property is</strong>: <code>ec2.accessKey</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#secretKey">secretKey</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The AWS Secret Access Key for an account on EC2<br/><strong>User property is</strong>: <code>ec2.secretKey</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#volumeId">volumeId</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The volume to take a snapshot of<br/><strong>User property is</strong>: <code>ec2.volumeId</code>.</td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Optional Parameters">
+        <table border="0">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Since</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><strong><a href="#description">description</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The description of the snapshot (if any)<br/><strong>User property is</strong>: <code>ec2.description</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#sleep">sleep</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The number of seconds to sleep in between status checks on the
+snapshot<br/><strong>Default value is</strong>: <code>30</code>.<br/><strong>User property is</strong>: <code>ec2.sleep</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#state">state</a></strong></td>
+            <td><code>String</code></td>
+            <td><code>-</code></td>
+            <td>The state the plugin will wait for the snapshot to be in before
+continuing<br/><strong>Default value is</strong>: <code>completed</code>.<br/><strong>User property is</strong>: <code>ec2.state</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#tags">tags</a></strong></td>
+            <td><code>List</code></td>
+            <td><code>-</code></td>
+            <td>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre><br/></td>
+          </tr>
+          <tr>
+            <td><strong><a href="#wait">wait</a></strong></td>
+            <td><code>boolean</code></td>
+            <td><code>-</code></td>
+            <td>If true, the build will wait until EC2 reports that the snapshot
+has reached the state of "completed"<br/><strong>Default value is</strong>: <code>true</code>.<br/><strong>User property is</strong>: <code>ec2.wait</code>.</td>
+          </tr>
+          <tr>
+            <td><strong><a href="#waitTimeout">waitTimeout</a></strong></td>
+            <td><code>int</code></td>
+            <td><code>-</code></td>
+            <td>The number of seconds to wait for the instance to terminate before
+timing out and failing the build<br/><strong>Default value is</strong>: <code>7200</code>.<br/><strong>User property is</strong>: <code>ec2.waitTimeout</code>.</td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Parameter Details">
+        <p><strong><a name="accessKey">accessKey</a>:</strong></p>
+        <div>The AWS Access Key Id for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.accessKey</code></li>
+        </ul><hr/><p><strong><a name="description">description</a>:</strong></p>
+        <div>The description of the snapshot (if any)</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.description</code></li>
+        </ul><hr/><p><strong><a name="secretKey">secretKey</a>:</strong></p>
+        <div>The AWS Secret Access Key for an account on EC2</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.secretKey</code></li>
+        </ul><hr/><p><strong><a name="sleep">sleep</a>:</strong></p>
+        <div>The number of seconds to sleep in between status checks on the
+snapshot</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.sleep</code></li>
+          <li><strong>Default</strong>: <code>30</code></li>
+        </ul><hr/><p><strong><a name="state">state</a>:</strong></p>
+        <div>The state the plugin will wait for the snapshot to be in before
+continuing</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.state</code></li>
+          <li><strong>Default</strong>: <code>completed</code></li>
+        </ul><hr/><p><strong><a name="tags">tags</a>:</strong></p>
+        <div>List of tags. Tags are name/value pairs and can be supplied in the
+plugin configuration like this:<br />
+ 
+<pre>
+  &lt;tags&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Name&lt;/key&gt;
+      &lt;value&gt;production&lt;/value&gt;
+    &lt;/tag&gt;
+    &lt;tag&gt;
+      &lt;key&gt;Category&lt;/key&gt;
+      &lt;value&gt;networking&lt;/value&gt;
+    &lt;/tag&gt;
+  &lt;/tags&gt;
+</pre></div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.util.List</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+        </ul><hr/><p><strong><a name="volumeId">volumeId</a>:</strong></p>
+        <div>The volume to take a snapshot of</div>
+        <ul>
+          <li><strong>Type</strong>: <code>java.lang.String</code></li>
+          <li><strong>Required</strong>: <code>Yes</code></li>
+          <li><strong>User Property</strong>: <code>ec2.volumeId</code></li>
+        </ul><hr/><p><strong><a name="wait">wait</a>:</strong></p>
+        <div>If true, the build will wait until EC2 reports that the snapshot
+has reached the state of "completed"</div>
+        <ul>
+          <li><strong>Type</strong>: <code>boolean</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.wait</code></li>
+          <li><strong>Default</strong>: <code>true</code></li>
+        </ul><hr/><p><strong><a name="waitTimeout">waitTimeout</a>:</strong></p>
+        <div>The number of seconds to wait for the instance to terminate before
+timing out and failing the build</div>
+        <ul>
+          <li><strong>Type</strong>: <code>int</code></li>
+          <li><strong>Required</strong>: <code>No</code></li>
+          <li><strong>User Property</strong>: <code>ec2.waitTimeout</code></li>
+          <li><strong>Default</strong>: <code>7200</code></li>
+        </ul>
+      </subsection>
+    </section>
+  </body>
+</document>
